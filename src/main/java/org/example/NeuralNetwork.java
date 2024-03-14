@@ -15,11 +15,19 @@ public class NeuralNetwork extends TelegramLongPollingBot {
     public String getBotToken() {
         return "";
     }
-
     @Override
     public void onUpdateReceived(Update update) {
-        System.out.println(update.getMessage().getFrom());
+        sendText(7257204L, "не пищи сюда"+update.getMessage().getFrom().getId());
     }
-
+    public void sendText(Long who, String what){
+        SendMessage sm = SendMessage.builder()
+                .chatId(who.toString()) //Who are we sending a message to
+                .text(what).build();    //Message content
+        try {
+            execute(sm);                        //Actually sending the message
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);      //Any error will be printed here
+        }
+    }
 
 }
